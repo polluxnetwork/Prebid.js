@@ -5,7 +5,7 @@ var bidfactory = require('src/bidfactory.js');
 var bidmanager = require('src/bidmanager.js');
 var adloader = require('src/adloader.js');
 var adaptermanager = require('src/adaptermanager');
-var { config } = require('src/config');
+var { getConfig } = require('src/config');
 
 var sekindoUMAdapter;
 sekindoUMAdapter = function sekindoUMAdapter() {
@@ -75,7 +75,7 @@ sekindoUMAdapter = function sekindoUMAdapter() {
     scriptSrc = utils.tryAppendQueryString(scriptSrc, 'hbver', '3');
     scriptSrc = utils.tryAppendQueryString(scriptSrc, 'hbobj', '$$PREBID_GLOBAL$$');
     scriptSrc = utils.tryAppendQueryString(scriptSrc, 'dcpmflr', bidfloor);
-    scriptSrc = utils.tryAppendQueryString(scriptSrc, 'hbto', config.bidderTimeout);
+    scriptSrc = utils.tryAppendQueryString(scriptSrc, 'hbto', getConfig('bidderTimeout'));
     scriptSrc = utils.tryAppendQueryString(scriptSrc, 'protocol', protocol);
 
     adloader.loadScript(scriptSrc);
