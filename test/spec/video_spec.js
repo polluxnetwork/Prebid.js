@@ -1,4 +1,6 @@
 import { isValidVideoBid } from 'src/video';
+import { newConfig } from 'src/config';
+import * as utils from 'src/utils';
 
 describe('video.js', () => {
   it('validates valid instream bids', () => {
@@ -33,6 +35,22 @@ describe('video.js', () => {
       }]
     }];
     const valid = isValidVideoBid(bid, bidRequests);
+    expect(valid).to.be(false);
+  });
+
+  it('catches invalid bids when prebid-cache is disabled', () => {
+    const bidRequests = [{
+      bids: [{
+        bidder: 'vastOnlyVideoBidder',
+        mediaTypes: { video: {} },
+      }]
+    }];
+
+    const config = newConfig();
+    config.setConfig({ usePrebidCache: false });
+
+    const valid = isValidVideoBid({ vastXml: '<xml>vast</xml>' }, bidRequests);
+
     expect(valid).to.be(false);
   });
 
